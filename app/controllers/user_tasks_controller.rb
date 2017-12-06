@@ -20,12 +20,14 @@ class UserTasksController < ApplicationController
 
   # GET /user_tasks/1/edit
   def edit
+    @user_task.due = fix_edit_date(@user_task.due)
   end
 
   # POST /user_tasks
   # POST /user_tasks.json
   def create
     @user_task = UserTask.new(user_task_params)
+    @user_task.due = fix_save_date(params[:user_task][:due])
 
     respond_to do |format|
       if @user_task.save
@@ -44,6 +46,7 @@ class UserTasksController < ApplicationController
   # PATCH/PUT /user_tasks/1.json
   def update
     respond_to do |format|
+      params[:user_task][:due] = fix_save_date(params[:user_task][:due])
       if @user_task.update(user_task_params)
         format.js
         # format.html { redirect_to @user_task, notice: 'User task was successfully updated.' }
@@ -81,5 +84,18 @@ class UserTasksController < ApplicationController
 
     def all_tasks
       @user_tasks = UserTask.order(:due)
+    end
+
+    def fix_save_date(due_date)
+      date_array = due_date.split('-')
+      due_date = date_array.insert(0, date_array.pop).join('-')
+      Date.parse(due_date)
+    end
+
+    def fix_edit_date(due_date)
+      date_array = due_date.to_s.split('-')
+      due_date = date_array.insert(-1, date_array.shift).join('-')
+      due_date
+      # Date.parse(due_date)
     end
 end

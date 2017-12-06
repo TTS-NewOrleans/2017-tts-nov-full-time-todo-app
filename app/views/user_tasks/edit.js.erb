@@ -2,4 +2,8 @@ $('#task-form')
   .html("<%= j ( render 'form' ) %>")
   .slideDown(350);
 
+$('#close-form').click(function() {
+  $('#task-form').slideUp(350);
+});
+
 <%= render 'datepicker' %>
