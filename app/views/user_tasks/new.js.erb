@@ -4,6 +4,9 @@ $('#task-form')
 
   $('#close-form').click(function() {
     $('#task-form').slideUp(350);
+    $('.add-task').show(0);
   });
+
+  $('.add-task').hide(0);
 
 <%= render 'datepicker' %>

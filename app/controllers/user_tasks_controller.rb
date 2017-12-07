@@ -96,6 +96,5 @@ class UserTasksController < ApplicationController
       date_array = due_date.to_s.split('-')
       due_date = date_array.insert(-1, date_array.shift).join('-')
       due_date
-      # Date.parse(due_date)
     end
 end
